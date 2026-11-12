@@ -1,35 +1,41 @@
-const STORAGE_TOKEN = 'O7AJXACVZ5CAI1NBKYLNHDS1WBLN0V24RQ1QN2S7';
-const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
+/**
+ * Storage layer of Join.
+ *
+ * The app used to save all data on the Developer Akademie remote storage server
+ * (remote-storage.developerakademie.org). That server is no longer usable: its TLS
+ * certificate expired in May 2026, so every request from the browser fails.
+ *
+ * All data now lives in the browser's localStorage. Both functions keep their
+ * async signature, so the code that calls them did not have to change.
+ */
+
+// Prefix keeps Join's keys apart from other apps on the same domain (e.g. GitHub Pages).
+const STORAGE_PREFIX = 'join:';
 
 
 /**
- * Saves a key-value pair into the backend storage
+ * Saves a key-value pair in localStorage
  *
  * @param {string} key - The key for the item
- * @param {*} value - The value to be stored
- * @returns {Promise} A promise that resolves when the item is successfully stored
+ * @param {string} value - The value to be stored (already JSON-stringified by the caller)
+ * @returns {Promise<void>} A promise that resolves when the item is stored
  */
 async function setItem(key, value) {
-  const payload = { key, value, token: STORAGE_TOKEN };
-  return fetch(STORAGE_URL, { method: 'POST', body: JSON.stringify(payload)})
-  .then(res => res.json());
+  localStorage.setItem(STORAGE_PREFIX + key, value);
 }
 
 
 /**
- * Loads a value from the backend storage based on the provided key
+ * Loads a value from localStorage based on the provided key
  *
  * @param {string} key - The key to retrieve the value
- * @returns {Promise} A promise that resolves with the retrieved value
- * @throws {Error} If the value cannot be found for the given key
+ * @returns {Promise<string>} A promise that resolves with the stored JSON string,
+ *   or an empty list ("[]") if nothing has been saved under this key yet
  */
 async function getItem(key) {
-  const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-  return fetch(url).then(res => res.json()).then(res => {
-      if (res.data) { 
-          return res.data.value;
-      } throw `Could not find data with key "${key}".`;
-  });
+  const value = localStorage.getItem(STORAGE_PREFIX + key);
+  if (value !== null) {
+    return value;
+  }
+  return '[]';
 }
-
-  
