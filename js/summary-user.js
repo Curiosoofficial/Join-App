@@ -84,15 +84,21 @@ function tasksUrgent() {
 
 
 /**
- * Displays the upcoming deadline
+ * Displays the upcoming deadline: the earliest due date of all tasks that are not done yet
  */
 function getDeadline() {
     document.getElementById('upcoming-deadline').innerHTML = '';
-    let oldestDate = tasks[0].date;
+    let openTasks = tasks.filter(t => t['status'] != 'done');
 
-    for (let i = 1; i < tasks.length; i++) {
-        if (tasks[i].date < oldestDate) {
-            oldestDate = tasks[i].date;
+    if (openTasks.length == 0) {
+        return;
+    }
+
+    let oldestDate = openTasks[0].date;
+
+    for (let i = 1; i < openTasks.length; i++) {
+        if (openTasks[i].date < oldestDate) {
+            oldestDate = openTasks[i].date;
         }
     }
 
