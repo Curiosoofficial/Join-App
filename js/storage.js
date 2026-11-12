@@ -30,12 +30,12 @@ async function setItem(key, value) {
  *
  * @param {string} key - The key to retrieve the value
  * @returns {Promise<string>} A promise that resolves with the stored JSON string,
- *   or an empty list ("[]") if nothing has been saved under this key yet
+ *   or the demo data (see demo-data.js) if nothing has been saved under this key yet
  */
 async function getItem(key) {
   const value = localStorage.getItem(STORAGE_PREFIX + key);
   if (value !== null) {
     return value;
   }
-  return '[]';
+  return getDemoData(key);
 }
