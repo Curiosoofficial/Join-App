@@ -333,7 +333,7 @@ h1 {
 }
 
 .contact-cancel-btn:hover .contact-create-icon {
-    content: url('./assets/img/iconoir_cancel_hover.svg');
+    content: url('../assets/img/iconoir_cancel_hover.svg');
 }
 
 /* Input Form Overlay */
