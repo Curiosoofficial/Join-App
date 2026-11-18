@@ -2,7 +2,7 @@
 
 > **Bootcamp-Projekt (Developer Akademie)**
 
-**Live-Demo:** _[LIVE-LINK FOLGT]_
+**Live-Demo:** https://curiosoofficial.github.io/Join-App/
 
 <!-- TODO Luka: Gruppenprojekt? Falls ja, Team und eigenen Anteil hier ergänzen, z. B. "Gruppenprojekt mit X und Y. Mein Teil: Board, Drag & Drop, Summary." -->
 
